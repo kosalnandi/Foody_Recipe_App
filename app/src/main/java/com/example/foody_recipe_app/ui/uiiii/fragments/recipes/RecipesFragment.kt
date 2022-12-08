@@ -99,6 +99,7 @@ class RecipesFragment : Fragment() {
                 else
                     FoodRecipe(emptyList())
                 mAdapter.setData(data)
+
             }
         }
     }
