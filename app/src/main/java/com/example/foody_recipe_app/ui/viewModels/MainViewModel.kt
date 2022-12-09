@@ -9,10 +9,8 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.foody_recipe_app.ui.data.Repository
 import com.example.foody_recipe_app.ui.database.RecipeEntity
-import com.example.foody_recipe_app.ui.jsonModels.FoodRecipe
+import com.example.foody_recipe_app.ui.movieModels.JsonMovie
 import com.example.foody_recipe_app.ui.uitl.NetworkResult
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.lang.Exception
@@ -35,22 +33,22 @@ class MainViewModel @ViewModelInject constructor(
         }
 
     /** Retrofit*/
-    var recipesResponse: MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
+    var recipesResponse: MutableLiveData<NetworkResult<JsonMovie>> = MutableLiveData()
 
-    fun getRecipes(queries: Map<String, String>) = viewModelScope.launch {
-        getRecipesSafeCall(queries)
+    fun getRecipes() = viewModelScope.launch {
+        getRecipesSafeCall()
     }
 
-    private suspend fun getRecipesSafeCall(queries: Map<String, String>) {
+    private suspend fun getRecipesSafeCall() {
         recipesResponse.value = NetworkResult.Loading()
         if (hasInternetConnection()) {
             try {
-                val response = repository.remote.getRecipes(queries)
+                val response = repository.remote.getRecipes()
                 recipesResponse.value = handleFoodRecipesResponse(response)
 
-                val foodRecipe = recipesResponse.value!!.data
-                if(foodRecipe != null) {
-                    offlineCacheRecipes(foodRecipe)
+                val jsonMovie = recipesResponse.value!!.data
+                if(jsonMovie != null) {
+                    offlineCacheRecipes(jsonMovie)
                 }
             } catch (e: Exception) {
                 recipesResponse.value = NetworkResult.Error("Recipes not found.")
@@ -60,12 +58,12 @@ class MainViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun offlineCacheRecipes(foodRecipe: FoodRecipe) {
-        val recipeEntity = RecipeEntity(foodRecipe)
+    private fun offlineCacheRecipes(jsonMovie: JsonMovie) {
+        val recipeEntity = RecipeEntity(jsonMovie)
         insertRecipe(recipeEntity)
     }
 
-    private fun handleFoodRecipesResponse(response: Response<FoodRecipe>): NetworkResult<FoodRecipe>? {
+    private fun handleFoodRecipesResponse(response: Response<JsonMovie>): NetworkResult<JsonMovie>? {
         when {
             response.message().toString().contains("timeout") -> {
                 return NetworkResult.Error("Timeout")
@@ -73,7 +71,7 @@ class MainViewModel @ViewModelInject constructor(
             response.code() == 402 -> {
                 return NetworkResult.Error("API Key Limited.")
             }
-            response.body()!!.results.isNullOrEmpty() -> {
+            response.body()!!.items.isNullOrEmpty() -> {
                 return NetworkResult.Error("Recipes not found.")
             }
             response.isSuccessful -> {

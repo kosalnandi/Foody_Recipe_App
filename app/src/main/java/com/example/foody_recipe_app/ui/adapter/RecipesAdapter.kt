@@ -6,17 +6,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foody_recipe_app.databinding.RecipesRowLayoutBinding
 import com.example.foody_recipe_app.ui.jsonModels.FoodRecipe
-import com.example.foody_recipe_app.ui.jsonModels.Result
+import com.example.foody_recipe_app.ui.movieModels.Item
+import com.example.foody_recipe_app.ui.movieModels.JsonMovie
 import com.example.foody_recipe_app.ui.uitl.RecipesDiffUtil
 
 class RecipesAdapter(): RecyclerView.Adapter<RecipesAdapter.MyViewHolder>() {
 
-    private var recipes = emptyList<Result>()
+    private var movies = emptyList<Item>()
 
     inner class MyViewHolder(private val binding: RecipesRowLayoutBinding): RecyclerView.ViewHolder(binding.root) {
 
-            fun bind(result: Result) {
-                binding.result = result
+            fun bind(item: Item) {
+                binding.item = item
                 binding.executePendingBindings()
             }
     }
@@ -28,18 +29,19 @@ class RecipesAdapter(): RecyclerView.Adapter<RecipesAdapter.MyViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-       val currentRecipe = recipes[position]
+       val currentRecipe = movies[position]
         holder.bind(currentRecipe)
+
     }
 
     override fun getItemCount(): Int {
-       return recipes.size
+       return movies.size
     }
 
-    fun setData(newData: FoodRecipe) {
-    val recipesDiffUtil = RecipesDiffUtil(recipes,newData.results)
+    fun setData(newData: JsonMovie) {
+    val recipesDiffUtil = RecipesDiffUtil(movies,newData.items)
     val diffCourses = DiffUtil.calculateDiff(recipesDiffUtil)
-        recipes = newData.results
+        movies = newData.items
     diffCourses.dispatchUpdatesTo(this)
     }
 

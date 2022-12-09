@@ -2,10 +2,11 @@ package com.example.foody_recipe_app.ui.uitl
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.foody_recipe_app.ui.jsonModels.Result
+import com.example.foody_recipe_app.ui.movieModels.Item
 
 class RecipesDiffUtil(
-    private val oldList: List<Result>,
-    private val newList: List<Result>
+    private val oldList: List<Item>,
+    private val newList: List<Item>
 ): DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         return oldList.size

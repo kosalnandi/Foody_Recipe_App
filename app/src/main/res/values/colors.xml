@@ -12,4 +12,63 @@
     <color name="yellow">#FFC114</color>
     <color name="green">#00FF00</color>
     <color name="lightGreen">#00C980</color>
+
+    <color name="yellow_primary">#FFBC42</color>
+    <color name="yellow_secondary">#CC9634</color>
+    <color name="onyx_accent">#313638</color>
+    <color name="accent_orange">#F46036</color>
+
+    <color name="colorPrimary">@color/yellow_primary</color>
+    <color name="colorPrimaryDark">@color/yellow_secondary</color>
+    <color name="colorAccent">@color/onyx_accent</color>
+    <color name="floating_rating_color">@color/yellow_primary</color>
+
+    <color name="bottom_bar_color">@color/colorAccent</color>
+    <color name="bottom_bar_item_color_active">@color/textColorLight</color>
+    <color name="bottom_bar_item_color_inactive">@color/granite_gray</color>
+    <color name="bottom_bar_divider_color">#1e66666e</color>
+
+    <color name="netflix_accent_color">#E50914</color>
+    <color name="divider_color">#44444444</color>
+
+    <color name="colorAccentDark">#2A2D34</color>
+    <color name="textColorLight">#EEF0F2</color>
+    <color name="textColorDark">#2A2d34</color>
+    <color name="textColorMildDark">#ff4a4d54</color>
+    <color name="textColorGray">#6b6570</color>
+
+    <color name="granite_gray">#66666e</color>
+
+    <!-- Bubble colors -->
+    <color name="space_cadet">#2e294e</color>
+    <color name="dogwood_rose">#d90368</color>
+    <color name="ksu_purple">#541388</color>
+    <color name="bittersweet_shimmer">#c14953</color>
+    <color name="iguana_green">#7cae7a</color>
+    <color name="persian_green">#17a398</color>
+
+    <color name="yellow_orange">#ffbc42</color>
+    <color name="eggshell">#f1e9da</color>
+    <color name="bone">#e0e0ce</color>
+    <color name="light_cobalt_blue">#94b0da</color>
+    <color name="waterspout">#9bf3f0</color>
+    <color name="pastel_green">#82d173</color>
+
+    <array name="bubble_dark">
+        <item>@color/space_cadet</item>
+        <item>@color/dogwood_rose</item>
+        <item>@color/ksu_purple</item>
+        <item>@color/bittersweet_shimmer</item>
+        <item>@color/iguana_green</item>
+        <item>@color/persian_green</item>
+    </array>
+
+    <array name="bubble_light">
+        <item>@color/yellow_orange</item>
+        <item>@color/eggshell</item>
+        <item>@color/bone</item>
+        <item>@color/light_cobalt_blue</item>
+        <item>@color/waterspout</item>
+        <item>@color/pastel_green</item>
+    </array>
 </resources>

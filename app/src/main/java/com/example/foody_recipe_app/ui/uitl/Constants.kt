@@ -5,8 +5,8 @@ open class Constants() {
 
     companion object {
 
-        const val BASE_URL ="https://api.spoonacular.com"
-        const val API_KEY = "9b017add950545e283ccf48d4e14dd76"
+        const val BASE_URL = "https://imdb-api.com/"
+        const val API_KEY = "k_hc2sam6f"
 
         //API Queries Keys
         const val Query_NUMBER = "number"

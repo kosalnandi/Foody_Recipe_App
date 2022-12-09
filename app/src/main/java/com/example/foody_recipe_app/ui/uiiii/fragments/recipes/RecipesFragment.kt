@@ -14,6 +14,7 @@ import com.example.foody_recipe_app.R
 import com.example.foody_recipe_app.ui.viewModels.MainViewModel
 import com.example.foody_recipe_app.ui.adapter.RecipesAdapter
 import com.example.foody_recipe_app.ui.jsonModels.FoodRecipe
+import com.example.foody_recipe_app.ui.movieModels.JsonMovie
 import com.example.foody_recipe_app.ui.uitl.Constants.Companion.API_KEY
 import com.example.foody_recipe_app.ui.uitl.NetworkResult
 import com.example.foody_recipe_app.ui.uitl.observeOnce
@@ -55,7 +56,7 @@ class RecipesFragment : Fragment() {
     }
     private fun setUpRecyclerView() {
         mView.recyclerview.adapter = mAdapter
-        mView.recyclerview.layoutManager = LinearLayoutManager(requireContext())
+
     }
 
 
@@ -75,7 +76,7 @@ class RecipesFragment : Fragment() {
 
     private fun requestApiData() {
         Log.d("RecipesFragment", "request Api Data called!!!")
-            mainViewModel.getRecipes(recipesViewModels.applyQueries())
+            mainViewModel.getRecipes()
             mainViewModel.recipesResponse.observe(viewLifecycleOwner) { response ->
                 when (response) {
                     is NetworkResult.Success -> {
@@ -98,7 +99,7 @@ class RecipesFragment : Fragment() {
                 val data = if(database.isNotEmpty())
                     database[0].foodRecipe
                 else
-                    FoodRecipe(emptyList())
+                    JsonMovie(items = emptyList())
                 mAdapter.setData(data)
 
             }
