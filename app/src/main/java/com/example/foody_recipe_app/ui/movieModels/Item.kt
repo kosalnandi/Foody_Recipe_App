@@ -14,11 +14,11 @@ data class Item(
     val imDbRating: String,
     @SerializedName("imDbRatingCount")
     val imDbRatingCount: String,
-    @SerializedName("image") //done
+    @SerializedName("image")
     val image: String,
     @SerializedName("rank")
     val rank: String,
-    @SerializedName("title")  //done
+    @SerializedName("title")
     val title: String,
     @SerializedName("year")
     val year: String

@@ -12,8 +12,8 @@
     <string name="FoodJokeFragment">Food Joke</string>
     <string name="no_internet_connection">NO Internet Connection</string>
 
-    <string name="app_name"> Movie Ratings</string>
-    <string name="app_name_short">Flutter</string>
+    <string name="app_name">Top 250-Movie List</string>
+    <string name="app_name_short">Movie</string>
     <string name="accessibility_access_info_content">Enable accessibility in the settings screen for <b>%1$s</b> to show movie ratings in <b>%2$s</b></string>
     <string name="accessibility_settings_button_content">Open Accessibility Settings</string>
     <string name="draw_access_info_content"><b>%1$s</b> needs permission to draw over other apps to show movie ratings when you\'re browsing <b>%2$s</b></string>

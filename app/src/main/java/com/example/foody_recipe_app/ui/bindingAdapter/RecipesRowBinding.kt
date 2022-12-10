@@ -18,6 +18,5 @@ class RecipesRowBinding {
                 crossfade(600)
             }
         }
-
     }
 }
