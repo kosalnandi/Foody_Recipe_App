@@ -17,7 +17,6 @@ import com.example.foody_recipe_app.ui.adapter.RecipesAdapter
 import com.example.foody_recipe_app.ui.jsonModels.FoodRecipe
 import com.example.foody_recipe_app.ui.uitl.Constants.Companion.API_KEY
 import com.example.foody_recipe_app.ui.uitl.NetworkResult
-import com.example.foody_recipe_app.ui.uitl.observeOnce
 import com.example.foody_recipe_app.ui.viewModels.RecipesViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_recipes.view.*
@@ -26,8 +25,8 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class RecipesFragment : Fragment() {
 
-    private var _binding: FragmentRecipesBinding? = null
-    private val binding get() = _binding!!
+    //binding fragmentRecipes xml
+    private lateinit var binding: FragmentRecipesBinding
 
     private lateinit var mainViewModel: MainViewModel
     private lateinit var recipesViewModels: RecipesViewModels
@@ -47,8 +46,10 @@ class RecipesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding =  FragmentRecipesBinding.inflate(inflater, container, false)
+        binding =  FragmentRecipesBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
+
+        //data binding with fragmentRecipe  and mainViewModel
         binding.mainViewModel = mainViewModel
 
         setUpRecyclerView()
@@ -65,7 +66,7 @@ class RecipesFragment : Fragment() {
 
     private fun readDatabase() {
        lifecycleScope.launch {
-           mainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { database ->
+           mainViewModel.readRecipes.observe(viewLifecycleOwner) { database ->
                if (database.isNotEmpty()) {
                    Log.d("RecipesFragment", "readDatabase called!!!")
                    mAdapter.setData(database[0].foodRecipe)
@@ -110,7 +111,7 @@ class RecipesFragment : Fragment() {
     }
     override fun onDestroy() {
         super.onDestroy()
-        _binding = null
+        binding
     }
 
 }
