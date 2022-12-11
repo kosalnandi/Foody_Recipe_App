@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foody_recipe_app.R
+import com.example.foody_recipe_app.databinding.FragmentRecipesBinding
 import com.example.foody_recipe_app.ui.viewModels.MainViewModel
 import com.example.foody_recipe_app.ui.adapter.RecipesAdapter
 import com.example.foody_recipe_app.ui.jsonModels.FoodRecipe
@@ -25,10 +26,12 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class RecipesFragment : Fragment() {
 
+    private var _binding: FragmentRecipesBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var mainViewModel: MainViewModel
     private lateinit var recipesViewModels: RecipesViewModels
     private val mAdapter by lazy { RecipesAdapter() }
-    private lateinit var mView: View
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,18 +47,19 @@ class RecipesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        mView =  inflater.inflate(R.layout.fragment_recipes, container, false)
-
+        _binding =  FragmentRecipesBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
+        binding.mainViewModel = mainViewModel
 
         setUpRecyclerView()
         readDatabase()
-        return mView
+        return binding.root
 
 
     }
     private fun setUpRecyclerView() {
-        mView.recyclerview.adapter = mAdapter
-        mView.recyclerview.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerview.adapter = mAdapter
+        binding.recyclerview.layoutManager = LinearLayoutManager(requireContext())
     }
 
 
@@ -104,6 +108,9 @@ class RecipesFragment : Fragment() {
             }
         }
     }
-
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 
 }
