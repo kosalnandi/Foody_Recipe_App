@@ -11,4 +11,6 @@
     <string name="FavoriteFragment">Favorites</string>
     <string name="FoodJokeFragment">Food Joke</string>
     <string name="no_internet_connection">NO Internet Connection</string>
+
+
 </resources>
