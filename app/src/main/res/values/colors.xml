@@ -21,10 +21,16 @@
     <color name="dark">#313C44</color>
     <color name="darker">#151B20</color>
 
-    <color name="colorPrimary">#206200EA</color>
+    <color name="colorPrimary">#6200EA</color>
     <color name="colorPrimaryDark">#5502C8</color>
     <color name="colorAccent">#9D46FF</color>
 
+//custom chip style
+
+    <color name="CheckedChipBackgroundColor">#206200EA</color>
+    <color name="ChipBackgroundColor">@color/lightGray</color>
+    <color name="CheckedChipTextColor">@color/red</color>
+    <color name="ChipTextColor">@color/darkGray</color>
 
 
 
