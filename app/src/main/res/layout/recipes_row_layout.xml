@@ -59,23 +59,26 @@
                     android:maxLines="2"
                     android:text="@{result.title}"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/recipe_imageView"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Title gsdg sgs gs dg sd sdg sdg sdg dg sd sd sdg  dgsdg dgg sdg dsgsd g sgd "/>
 
                 <TextView
                     android:id="@+id/descriptionTextView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
+                    android:textColor="@color/black"
                     android:ellipsize="end"
-                    android:maxLines="3"
+                    android:maxLines="2"
                     android:text="@{result.summary}"
                     app:layout_constraintEnd_toEndOf="@+id/title_textView"
                     app:layout_constraintStart_toStartOf="@+id/title_textView"
-                    app:layout_constraintTop_toBottomOf="@+id/title_textView" />
+                    app:layout_constraintTop_toBottomOf="@+id/title_textView"
+                    tools:text="Subtitle dvsd g gs gsd ds gdsg dsg sdg dsg dsg sdg sdg sd gsd sg sd sdg sdg sdg sdg sdg dsg "/>
 
                 <ImageView
                     android:id="@+id/heartImageView"

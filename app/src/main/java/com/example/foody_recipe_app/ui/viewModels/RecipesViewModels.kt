@@ -3,30 +3,55 @@ package com.example.foody_recipe_app.ui.viewModels
 import android.app.Application
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
-import com.example.foody_recipe_app.ui.MyApplication
+import androidx.lifecycle.viewModelScope
+import com.example.foody_recipe_app.ui.data.DataStoreRepository
 import com.example.foody_recipe_app.ui.uitl.Constants.Companion.API_KEY
 import com.example.foody_recipe_app.ui.uitl.Constants.Companion.DEFAULT_DIET_TYPE
 import com.example.foody_recipe_app.ui.uitl.Constants.Companion.DEFAULT_MEAL_TYPE
 import com.example.foody_recipe_app.ui.uitl.Constants.Companion.DEFAULT_RECIPE_NUMBER
-import com.example.foody_recipe_app.ui.uitl.Constants.Companion.Query_ADD_RECIPES_INFORMATIONS
-import com.example.foody_recipe_app.ui.uitl.Constants.Companion.Query_API_KEY
-import com.example.foody_recipe_app.ui.uitl.Constants.Companion.Query_DIET
-import com.example.foody_recipe_app.ui.uitl.Constants.Companion.Query_FILL_INGREDIENTS
-import com.example.foody_recipe_app.ui.uitl.Constants.Companion.Query_NUMBER
-import com.example.foody_recipe_app.ui.uitl.Constants.Companion.Query_TYPE
+import com.example.foody_recipe_app.ui.uitl.Constants.Companion.QUERY_ADD_RECIPE_INFORMATION
+import com.example.foody_recipe_app.ui.uitl.Constants.Companion.QUERY_API_KEY
+import com.example.foody_recipe_app.ui.uitl.Constants.Companion.QUERY_DIET
+import com.example.foody_recipe_app.ui.uitl.Constants.Companion.QUERY_FILL_INGREDIENTS
+import com.example.foody_recipe_app.ui.uitl.Constants.Companion.QUERY_NUMBER
+import com.example.foody_recipe_app.ui.uitl.Constants.Companion.QUERY_TYPE
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 
-class RecipesViewModels @ViewModelInject constructor(application: Application): AndroidViewModel(application) {
+class RecipesViewModels @ViewModelInject constructor(
+    application: Application,
+    private val dataStoreRepository: DataStoreRepository
+): AndroidViewModel(application) {
 
-      fun applyQueries():HashMap<String, String> {
+    private var mealType = DEFAULT_MEAL_TYPE
+    private var dietType = DEFAULT_DIET_TYPE
+
+    val readMealAndDietType = dataStoreRepository.readMealAndDietType
+
+    fun saveMealAndDietType(mealType: String, mealTypeId: Int, dietType: String, dietTypeId: Int) =
+        viewModelScope.launch(Dispatchers.IO) {
+            dataStoreRepository.saveMealAndDietType(mealType, mealTypeId, dietType, dietTypeId)
+        }
+
+
+    fun applyQueries(): HashMap<String, String> {
         val queries: HashMap<String, String> = HashMap()
 
-        queries[Query_NUMBER] = DEFAULT_RECIPE_NUMBER
-        queries[Query_API_KEY] = API_KEY
-        queries[Query_TYPE] = DEFAULT_MEAL_TYPE
-        queries[Query_DIET] = DEFAULT_DIET_TYPE
-        queries[Query_ADD_RECIPES_INFORMATIONS] = "true"
-        queries[Query_FILL_INGREDIENTS] = "true"
+        viewModelScope.launch {
+            readMealAndDietType.collect { value ->
+                mealType = value.SelectedMealType
+                dietType = value.SelectedDietType
+            }
+        }
+
+        queries[QUERY_NUMBER] = DEFAULT_RECIPE_NUMBER
+        queries[QUERY_API_KEY] = API_KEY
+        queries[QUERY_TYPE] = mealType
+        queries[QUERY_DIET] = dietType
+        queries[QUERY_ADD_RECIPE_INFORMATION] = "true"
+        queries[QUERY_FILL_INGREDIENTS] = "true"
 
         return queries
     }
