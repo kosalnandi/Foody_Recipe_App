@@ -16,6 +16,7 @@ import com.example.foody_recipe_app.R
 import com.example.foody_recipe_app.databinding.FragmentRecipesBinding
 import com.example.foody_recipe_app.ui.viewModels.MainViewModel
 import com.example.foody_recipe_app.ui.adapter.RecipesAdapter
+import com.example.foody_recipe_app.ui.data.NetworkListener
 import com.example.foody_recipe_app.ui.jsonModels.FoodRecipe
 import com.example.foody_recipe_app.ui.uitl.Constants.Companion.API_KEY
 import com.example.foody_recipe_app.ui.uitl.NetworkResult
@@ -23,8 +24,11 @@ import com.example.foody_recipe_app.ui.uitl.observeOnce
 import com.example.foody_recipe_app.ui.viewModels.RecipesViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_recipes.view.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class RecipesFragment : Fragment() {
 
@@ -35,6 +39,7 @@ class RecipesFragment : Fragment() {
     private lateinit var mainViewModel: MainViewModel
     private lateinit var recipesViewModels: RecipesViewModels
     private val mAdapter by lazy { RecipesAdapter() }
+    private lateinit var networkListener: NetworkListener
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +66,23 @@ class RecipesFragment : Fragment() {
         }
 
         setUpRecyclerView()
-        readDatabase()
+        recipesViewModels.readBackOnline.observe(viewLifecycleOwner) {
+            recipesViewModels.backOnline = it
+        }
+
+
+      lifecycleScope.launch {
+          networkListener = NetworkListener()
+          networkListener.checkNetworkAvailability(requireContext())
+              .collect {status ->
+                  Log.d("NetworkListener",status.toString())
+                  recipesViewModels.networkStatus = status
+                  recipesViewModels.showNetworkStatus()
+                  readDatabase()
+
+              }
+      }
+
         return binding.root
 
 

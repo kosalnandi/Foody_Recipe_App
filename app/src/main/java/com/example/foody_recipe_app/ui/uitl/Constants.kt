@@ -25,11 +25,12 @@ open class Constants() {
         const val DEFAULT_MEAL_TYPE = "main course"
         const val DEFAULT_DIET_TYPE = "gluten free"
 
-        const val PREFERENCES_NAME = "food recipe preferences"
-        const val PREFERENCES_MEAL_TYPE = "meal type"
-        const val PREFERENCE_MEAL_TYPE_ID = "meal type id"
-        const val PREFERENCES_DIET_TYPE = "diet type"
-        const val PREFERENCES_DIET_TYPE_ID = "diet type id"
+        const val PREFERENCES_NAME = "foodRecipePreferences"
+        const val PREFERENCES_MEAL_TYPE = "mealType"
+        const val PREFERENCE_MEAL_TYPE_ID = "mealTypeId"
+        const val PREFERENCES_DIET_TYPE = "dietType"
+        const val PREFERENCES_DIET_TYPE_ID = "dietTypeId"
+        const val PREFERENCES_BACK_ONLINE = "backOnline"
 
     }
 }
